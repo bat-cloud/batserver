@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BatServer</title>
+    <style>
+        body {
+            background-color: #005174; /* Dunkles Grau als Hintergrund */
+            color: #ffffff; /* Schriftfarbe #00607F */
+            font-family: 'Nova Mono', monospace; /* Schriftart Nova Mono */
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            position: relative;
+        }
+
+        header {
+            padding: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #005174;
+        }
+
+        main {
+            padding: 20px;
+            margin-top: 50px; /* Platz für das Logo oben */
+        }
+
+        p {
+            background-color: #444;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        a {
+            display: inline-block;
+            background-color: #666;
+            color: #21a5d1;
+            text-decoration: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #logo {
+            max-width: 5%;
+            height: auto;
+            position: absolute;
+            top: -5px;
+            left: 5%;
+            cursor: pointer;
+        }
+
+        /* Neue Box für Videoeinbettung */
+        #videoBox {
+            background-color: #444;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        /* Separate Box für Überschrift */
+        .sectionTitle {
+            background-color: #444;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        /* Entferne Box und Schatten für den Text unter dem Video */
+        #videoBox p {
+            background-color: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Logo hochladen -->
+        <img id="logo" src="batserver_logo.png" alt="BatServer Logo" onclick="window.location.href='index.html'">
+    </header>
+
+    <main>
+        <!-- Separate Box für Überschrift -->
+        <div class="sectionTitle">
+            <h1>Willkommen auf BatServer</h1>
+        </div>
+
+        <!-- Zusätzlicher Text und Pfeil zur Weiterleitung in derselben Box -->
+        <p>
+            This website is an online data repository for Aurel Böllinger and Raphael Klemm.
+            <br>
+            To upload additional files or to customize files, please follow the <a href="upload.html">link &rarr;</a>.
+        </p>
+
+        <!-- Neue Box für Videoeinbettung -->
+        <div id="videoBox">
+            <!-- Einbettungscode für YouTube-Video -->
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/kRwCPUEND1U" frameborder="0" allowfullscreen></iframe>
+            <!-- Text unter dem Video -->
+            <p>If you're bored, look at this.</p>
+        </div>
+
+        <!-- Separate Box für Überschrift -->
+        <div class="sectionTitle">
+            <h2>Support and Imprint</h2>
+        </div>
+        <!-- Box für Support und Imprint -->
+        <div>
+            <p>
+                Aurel Böllinger<br>
+                Deutschland<br>
+                Dorfstraße 77<br>
+                7749<br>
+                <a href="mailto:codename@fantasymail.com">codename@fantasymail.com</a>
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // Überprüfe, ob der Benutzer angemeldet ist
+        var isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) {
+            // Benutzer ist nicht angemeldet, leite ihn zur Login-Seite weiter
+            window.location.href = 'Login.html';
+        }
+    </script>
+    
+</body>
+</html>

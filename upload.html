@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Files</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #005174;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        .password-container {
+            background-color: #3f3f3f;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .password-container label, .password-container input {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .password-container input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            background-color: #3f3f3f;
+        }
+
+        .password-container button {
+            background-color: #3f3f3f;
+            color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .password-container button:hover {
+            background-color: #333333;
+        }
+        
+        .upload-container,
+        .folder-container {
+            background-color: #3f3f3f;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .upload-container label, .upload-container input,
+        .upload-container select, .folder-container ul, .folder-container li {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .upload-container input,
+        .upload-container select,
+        .folder-container li {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            background-color: #3f3f3f;
+        }
+
+        .upload-container button,
+        .folder-container button {
+            background-color: #3f3f3f;
+            color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .upload-container button:hover,
+        .folder-container button:hover {
+            background-color: #333333;
+        }
+
+        .create-folder-button {
+            background-color: #3f3f3f;
+            color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .create-folder-button:hover {
+            background-color: #333333;
+        }
+
+        .edit-button,
+        .download-button,
+        .delete-button {
+            background-color: #ffffff;
+            color: #3f3f3f;
+            padding: 5px;
+            border: 1px solid #3f3f3f;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+        .folder-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .folder-list-item {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .folder-content {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="password-container" id="passwordContainer">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button onclick="checkCredentials()">Submit</button>
+    </div>
+
+    <div class="upload-container" id="uploadContainer" style="display: none;">
+        <h2>Upload Files</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="file">Select File:</label>
+            <input type="file" id="file" name="file" accept=".pdf, .doc, .docx">
+
+            <label for="folder">Select Folder:</label>
+            <select id="folder" name="folder">
+            </select>
+
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <div class="folder-container" id="folderContainer" style="display: none;">
+        <h2>Directory</h2>
+        <ul id="folderList" class="folder-list">
+        </ul>
+        
+        <button class="create-folder-button" onclick="createFolder()">+</button>
+    </div>
+
+    <script>
+        function checkCredentials() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Dummy check, replace with secure authentication logic
+            if (username === "Raurel" && password === "11.12.2008") {
+                document.getElementById("passwordContainer").style.display = "none";
+                document.getElementById("uploadContainer").style.display = "block";
+                document.getElementById("folderContainer").style.display = "block";
+                loadFolders();
+            } else {
+                alert("Invalid credentials. Redirecting to login page.");
+                window.location.href = "login.html";
+            }
+        }
+
+        function loadFolders() {
+            // Dummy function to load folders, replace with actual implementation
+            var folderList = document.getElementById("folderList");
+            folderList.innerHTML = "<li>Folder 1</li><li>Folder 2</li><li>Folder 3</li>";
+        }
+
+        function createFolder() {
+            var folderName = prompt("Enter the name for the new folder:");
+            if (folderName) {
+                var folderList = document.getElementById("folderList");
+                var newFolder = createFolderElement(folderName);
+                folderList.appendChild(newFolder);
+                console.log("New folder created:", folderName);
+            }
+        }
+
+        function createFolderInside(parentFolderId) {
+            var folderName = prompt("Enter the name for the new folder inside " + parentFolderId + ":");
+            if (folderName) {
+                var parentFolder = document.getElementById(parentFolderId);
+                var folderContent = parentFolder.querySelector('.folder-content');
+                var newFolder = createFolderElement(folderName);
+                folderContent.appendChild(newFolder);
+                console.log("New folder created inside", parentFolderId + ":", folderName);
+            }
+        }
+
+        function createFolderElement(folderName) {
+            var newFolder = document.createElement("li");
+            newFolder.id = folderName.toLowerCase();
+            newFolder.className = "folder-list-item";
+            newFolder.textContent = folderName + " ";
+
+            var editLink = document.createElement("a");
+            editLink.href = "#";
+            editLink.className = "edit-button";
+            editLink.textContent = "Edit";
+            editLink.onclick = function () {
+                editFolder(folderName.toLowerCase());
+            };
+            newFolder.appendChild(editLink);
+
+            var downloadLink = document.createElement("a");
+            downloadLink.href = "#";
+            downloadLink.className = "download-button";
+            downloadLink.textContent = "Download";
+            downloadLink.onclick = function () {
+                downloadFolder(folderName.toLowerCase());
+            };
+            newFolder.appendChild(downloadLink);
+
+            var deleteLink = document.createElement("a");
+            deleteLink.href = "#";
+            deleteLink.className = "delete-button";
+            deleteLink.textContent = "Delete";
+            deleteLink.onclick = function () {
+                deleteFolder(folderName.toLowerCase());
+            };
+            newFolder.appendChild(deleteLink);
+
+            var folderContent = document.createElement("div");
+            folderContent.className = "folder-content";
+            var folderList = document.createElement("ul");
+            folderList.className = "folder-list";
+            folderContent.appendChild(folderList);
+
+            var createFolderButton = document.createElement("button");
+            createFolderButton.className = "create-folder-button";
+            createFolderButton.textContent = "+";
+            createFolderButton.onclick = function () {
+                createFolderInside(folderName.toLowerCase());
+            };
+            folderContent.appendChild(createFolderButton);
+
+            newFolder.appendChild(folderContent);
+
+            return newFolder;
+        }
+
+        function editFolder(folderId) {
+            var folderName = prompt("Enter the new name for the folder:");
+            if (folderName) {
+                var folderElement = document.getElementById(folderId);
+                folderElement.id = folderName.toLowerCase();
+                folderElement.textContent = folderName + " ";
+                console.log("Folder edited:", folderName);
+            }
+        }
+
+        function deleteFolder(folderId) {
+            var folderElement = document.getElementById(folderId);
+            folderElement.parentNode.removeChild(folderElement);
+            console.log("Folder deleted:", folderId);
+        }
+
+        function downloadFolder(folderId) {
+            console.log("Downloading folder:", folderId);
+            // Handle the download functionality here
+        }
+    </script>
+</body>
+</html>
